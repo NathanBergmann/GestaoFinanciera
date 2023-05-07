@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
         AdicionarGastos adicionarGastos = new AdicionarGastos();
-        AdicionaGanho a = new AdicionaGanho();
+        AdicionaGanho aGanho = new AdicionaGanho();
         int opcao = 0;
         int indexGanho = 0;
         int indexGasto = 0;
@@ -28,26 +28,22 @@ public class Main {
             switch (opcao) {
 
                 case 1:// Gastos
-                    //
                     countGastos = adicionarGastos.MainAdicionarGastos(countGastos);
-
                     break;
                 case 2: //Ganhos
-
-                    indexGanho = a.MainAdicionarGanho(indexGanho);
+                    indexGanho = aGanho.MainAdicionarGanho(indexGanho);
                     break;
                 case 3: // Relatório Gastos
-                    System.out.println("O número escolhido foi: 3.");
                     GastosView relatorioGastos = new GastosView(adicionarGastos);
                     relatorioGastos.MainRelatorioGastos();
                     break;
                 case 4: // Relatório Ganhos
                     GanhosView relGanhos = new GanhosView();
-                    AdicionaGanho b = new AdicionaGanho();
-                    relGanhos.RelatorioGanhos(b.g, indexGanho);
+                    relGanhos.RelatorioGanhos(aGanho.g, indexGanho);
                     break;
-                case 5: // Saldo Mensal
-                    System.out.println("O número escolhido foi: 5.");
+                case 5:
+                    SaldoView saldo = new SaldoView();
+                    saldo.RelatorioSaldoMensal(aGanho.g,indexGanho, adicionarGastos.gasto, indexGasto);
                     break;
                 case 6:
                     System.out.println("O número escolhido foi: 6.");

@@ -1,13 +1,13 @@
-import java.text.*;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 public class Ganhos {
     private String NomeGanho;
     private String DescricaoGanho;
-    Date DataGanho;
+    private LocalDate DataGanho;
     private double ValorGanho;
-    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    public void setGanho(String nomeGanho, String descricaoGanho, Date dataGanho, double valorGanho){
+    public void setGanho(String nomeGanho, String descricaoGanho, LocalDate dataGanho, double valorGanho){
         this.NomeGanho = nomeGanho;
         this.DescricaoGanho = descricaoGanho;
         this.DataGanho = dataGanho;
@@ -15,14 +15,17 @@ public class Ganhos {
     }
     public String getGanho(int mes, int ano){
         String retorno = "";
-        if (DataGanho.getMonth()+1 == mes && DataGanho.getYear() == ano) {
-            System.out.println("Entrou no if");
-            retorno = NomeGanho + " | " + DescricaoGanho + " | " + formato.format(DataGanho) + " | " + ValorGanho + "\n";
+        if (DataGanho.getMonthValue() == mes && DataGanho.getYear() == ano) {
+            retorno = NomeGanho + " | " + DescricaoGanho + " | " + formatter.format(DataGanho) + " | " + ValorGanho + "\n";
         }
         return retorno;
     }
-    public String getNome(){
-        return NomeGanho;
+    public double getValorGanho(int mes, int ano){
+        double valorGanho = 0;
+        if (DataGanho.getMonthValue() == mes && DataGanho.getYear() == ano){
+            valorGanho = this.ValorGanho;
+        }
+        return valorGanho;
     }
 
 }

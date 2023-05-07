@@ -1,15 +1,16 @@
 import java.util.Scanner;
-import java.util.Date;
-import java.text.*;
-public class    AdicionaGanho {
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+public class AdicionaGanho {
     int opcaoGanho = 0;
-    Scanner entrada = new Scanner(System.in);
+    public Scanner entrada = new Scanner(System.in);
     public Ganhos[] g = new Ganhos[100];
     String Nome;
-    Date Data;
     double Valor;
     String TipoGanho;
     int indexGanhos;
+    LocalDate dataGanho;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public int MainAdicionarGanho(int indexGanhos){
         this.indexGanhos = indexGanhos;
@@ -42,7 +43,7 @@ public class    AdicionaGanho {
                     break;
             }
         }
-        return indexGanhos;
+        return this.indexGanhos;
     }
     private void setParametros(){
         System.out.println("Informe o título do ganho");
@@ -51,18 +52,12 @@ public class    AdicionaGanho {
         Valor = entrada.nextDouble();
         System.out.println("Informe a data do ganho");
         String dataTemp = entrada.next();
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        try {
-            Data = formato.parse(dataTemp);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        dataGanho = LocalDate.parse(dataTemp, formatter);
         sendParametros();
     }
     private void sendParametros(){
         g[indexGanhos] = new Ganhos();
-        g[indexGanhos].setGanho(Nome,TipoGanho, Data, Valor);
-        System.out.println(g[indexGanhos].getGanho(4,2023));
+        g[indexGanhos].setGanho(Nome,TipoGanho, dataGanho, Valor);
         indexGanhos ++;
     }
 }

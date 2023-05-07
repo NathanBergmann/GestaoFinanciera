@@ -1,7 +1,5 @@
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 
@@ -9,14 +7,12 @@ public class AdicionarGastos {
     private int opcaoGasto = 0;
     private String nome;
     private String descricao;
-    private Date data;
+    private LocalDate data;
     private String formaPagamento;
     private String dataTemp;
     private Double valor;
     private int countGastos;
-
-    //Gastos gasto = new Gastos();
-    DateFormat convertData = DateFormat.getDateInstance();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private int opcaoPagamento = 0;
 
     //Gastos gastos = new Gastos();
@@ -78,12 +74,7 @@ public class AdicionarGastos {
         dataTemp = entrada.next();
         System.out.println("Informe o valor: ");
         valor = entrada.nextDouble();
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        try {
-            data = formato.parse(dataTemp);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        data = LocalDate.parse(dataTemp, formatter);
 
         while (opcaoPagamento != 1 && opcaoPagamento != 2 && opcaoPagamento != 3) {
             System.out.println("Informe a opção de Pagamento:");
@@ -101,16 +92,13 @@ public class AdicionarGastos {
                 System.out.println("Opção Inválida.");
             }
         }
-        //gasto[countGastos].setGasto("Luz","Habitação",data,"Pix",valor);
+
         sendParametrosGastos();
         return;
     }
 
     private void sendParametrosGastos() {
         gasto[countGastos] = new Gastos();
-        System.out.println("Quantidade de posições Gasto: " + gasto.length);
-        System.out.println("Valor do Contador" + countGastos);
-
         gasto[countGastos].setGasto(nome, descricao, data, formaPagamento, valor);
         countGastos++;
     }
